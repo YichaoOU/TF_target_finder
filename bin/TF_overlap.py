@@ -73,8 +73,8 @@ def main():
 	overlaps = bedtools_overlap(tf,gene,args.output)
 	print ("TF gene overlap file: %s"%(overlaps))
 	df = read_bed(overlaps,0)
-	tmp = df[[4,5,6]]
-	tmp['name'] = tmp[4]+tmp[5].astype(str)+tmp[6].astype(str)
+	tmp = df[[4,5,6,3]]
+	tmp['name'] = tmp[4]+tmp[5].astype(str)+tmp[6].astype(str)+tmp[3].astype(str)
 	tmp = tmp.drop_duplicates('name')
 	tmp = tmp.drop(['name'],axis=1)
 	to_bed(tmp,"%s.TFBS.list"%(args.output))

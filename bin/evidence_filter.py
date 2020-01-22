@@ -35,6 +35,7 @@ def my_args():
 	mainParser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 	mainParser.add_argument('-g',"--gene_list",help="1 column",required=True)	
+	mainParser.add_argument("--TFBS_list",help="4 columns",required=True)	
 	mainParser.add_argument('-e',"--evidence",help="1 or 2 or 3 columns, no header,1 = filter by given gene list, 2 = known interaction, 3 = gene expression",required=True)	
 	mainParser.add_argument('-t',"--target",help="if input evidence is known interaction, you have to have a target gene, so that every interacting genes to this targets will be used as filter",default="None")	
 	mainParser.add_argument("--cutoff",help="if input evidence is gene expression, please give a cutoff for logFC and FDR/p-value, e.g., 2,1e-3",default="2,1e-2")	
@@ -75,14 +76,21 @@ def evidence_to_list(args):
 def main():
 
 	args = my_args()
+	args.output = args.output.replace(".list","")
 	gene = read_table(args.gene_list)
 	gene[0] = [x.upper() for x in gene[0]]
 	evidence = evidence_to_list(args)
 	evidence = [x.upper() for x in evidence]
 	gene = gene[gene[0].isin(evidence)]
 	print ("Number of genes remained: %s"%(gene.shape[0]))
-	to_bed(gene,"%s.list"%(args.output))
-	print ("Output file: %s.list"%(args.output))
+	to_bed(gene,"%s.gene.list"%(args.output))
+	print ("Output file: %s.gene.list"%(args.output))
+	tf = read_bed(args.TFBS_list,0)
+	tf[3] = [x.upper() for x in tf[3]]
+	tf = tf[tf[3].isin(evidence)]
+	to_bed(tf,"%s.TFBS.list"%(args.output))
+	print ("Output file: %s.TFBS.list"%(args.output))
+	
 
 if __name__ == "__main__":
 	main()
