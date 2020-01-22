@@ -44,5 +44,5 @@ cat $output_label.capC.TFBS.list $output_label.TSS.TFBS.list > $output_label.TFB
 ../bin/evidence_filter.py -g $output_label.gene.list -e $BIOGRID_ALL_known_interaction -o $output_label.BIOGRID.ALL.list -t $output_label
 
 
-
+../../bin/co_binding_test.py -f1 ../NFIX.TFBS.list -f2 GSM1708650_Erg_416B.mm9.bed -d 1000
 

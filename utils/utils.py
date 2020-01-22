@@ -2,8 +2,29 @@ import argparse
 import uuid
 import pandas as pd
 import os
-
+import pandas as pd
+import sys
+import matplotlib
+matplotlib.use('agg')
+import os
+import matplotlib as mpl
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib.colors as clr
+import numpy as np
+from matplotlib.colors import ListedColormap
+import argparse
+import datetime
+import getpass
+import uuid
+from scipy.interpolate import interp1d
+import re, string
+from matplotlib_venn import venn2
+import subprocess
+from joblib import Parallel, delayed
 import warnings
+import scipy
 warnings.filterwarnings("ignore")
 def to_bed(df,out):
 	df.to_csv(out,sep="\t",header=False,index=False)
@@ -21,4 +42,10 @@ def read_bed(f,d):
 	return df
 
 
+def wccount(filename):
+	df = pd.read_csv(filename,sep="\t",header=None)
+	df['name'] = df[0]+":"+df[1].astype(str)+"-"+df[2].astype(str)
+	df = df.drop_duplicates("name")
+	# out = subprocess.Popen(['wc', '-l', filename],stdout=subprocess.PIPE,stderr=subprocess.STDOUT).communicate()[0]
+	return df.shape[0]
 
