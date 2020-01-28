@@ -12,7 +12,7 @@ Query TF bed: `NFIX_idr_peaks.bed`
 
 EPI: `captureC.HSC.mm9.bed`
 
-gene TSS: `mm9.ensembl_v67.gene_name.bed`
+gene TSS: `mm9.ensembl_v67.TSS.gene_name.bed`
 
 Gene expression: `results.KO_vs_WT.txt`
 
