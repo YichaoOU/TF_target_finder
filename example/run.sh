@@ -18,7 +18,7 @@ motif_scanning_flank=200
 ################### INPUTS ##############################
 query="NFIX_idr_peaks.bed"
 EPI="captureC.HSC.mm9.bed"
-TSS="mm9.ensembl_v67.gene_name.bed"
+TSS="mm9.ensembl_v67.TSS.gene_name.bed"
 gene_expression="results.KO_vs_WT.txt"
 BIOGRID_mouse_known_interaction="Mus_musculus.interaction.list"
 BIOGRID_ALL_known_interaction="ALL.interaction.list"
