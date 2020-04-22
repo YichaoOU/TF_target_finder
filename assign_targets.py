@@ -86,6 +86,7 @@ def my_args():
 	
 
 	mainParser.add_argument('-o',"--output",  help="output intermediate file",default="output")
+	mainParser.add_argument("--label",  help="prefix for the file",default="TFBS")
 	##------- add parameters above ---------------------
 	args = mainParser.parse_args()	
 	return args
@@ -102,7 +103,7 @@ def main():
 	
 	EPI_target_label = "captureC"
 	my_query.find_EPI_target(args.epi_bed,EPI_target_label,args.d3)
-	target_gene_set_label = "RNA_seq"
+	target_gene_set_label = args.label
 	use_cols = ['nearest_TSS_gene','hard_assignment','%s_gene'%(EPI_target_label)]
 	if args.conservative:
 		use_cols = ['%s_gene'%(EPI_target_label)]

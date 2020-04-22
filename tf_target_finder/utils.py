@@ -48,7 +48,11 @@ class query:
 		df = bedtools_overlap(self.df[['query_chr','query_extend_start','query_extend_end','query_name']],df[df.columns[:5]])
 		df.index = df[3].tolist()
 		# print (df.head())
-		target_genes = pd.DataFrame(df.groupby(3)[df.columns[-3]].apply(lambda x: ','.join(x)))
+		use_col=-2
+		if score_col_flag:
+			use_col = -3
+			
+		target_genes = pd.DataFrame(df.groupby(3)[df.columns[use_col]].apply(lambda x: ','.join(x)))
 		target_genes.columns = ['target_gene']
 		target_genes = target_genes['target_gene'].to_dict()
 		self.df['%s_gene'%(label)] = self.df['query_name'].map(target_genes)
