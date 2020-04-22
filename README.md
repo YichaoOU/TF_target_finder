@@ -22,9 +22,9 @@ Hard-assignment simply means that if a query region occurs in gene A's promoter,
 
 Soft-assignment means that only if no target genes are assigned to the query region, then its nearest gene (based on TSS annotation) will be assigned to that query region.
 
-By default, soft-assignment is on, users have the option to turn it off.
+By default, both soft and hard assignment will add aditional target genes. Use `--conservative` to use only EPI based target genes.
 
-Using (Bio-1, hard and soft assignments), we can have all candidate assignments (output file: `*.query.targets_all.bed`). Using (Bio-2), we can have high-confidence candidate assignments (output file: `*.query.DEG_targets_filter.bed`). 
+Using (Bio-1, hard and soft assignments), we can have all candidate assignments (output file: `[label].query.targets_all.bed`). Using (Bio-2), we can have high-confidence candidate assignments (output file: `[label].query.DEG_targets_filter.bed`). Default label name is `RNA_seq`
 
 ## TF Co-Binding Factor Finder
 
@@ -39,13 +39,6 @@ The `co_binding_test.py` program evaluates the significance of number overlaping
 3. MEME v4.11.2
 
 
-# Input
-
-
-
-
-
-# Output
 
 
 # Usage
@@ -53,12 +46,12 @@ The `co_binding_test.py` program evaluates the significance of number overlaping
 1. Find direct target
 
 ```
-python assign_targets.py -q data/example_query.bed -tss data/mm9.ensembl_v67.TSS.gene_name.bed -epi data/captureC.HSC.mm9.bed -exp example/results.KO_vs_WT.txt --conservative
+python assign_targets.py -q data/example_query.bed -tss data/mm9.ensembl_v67.TSS.gene_name.bed -epi data/captureC.HSC.mm9.bed -exp data/example_KO_vs_WT.txt --conservative
 ```
 
 In (2) and (3), the input becomes the subset of query set (i.e., those with direct targets assigned)
 
-2. Co-binding test for two chip-seq peaks
+2. co-binding test for two chip-seq peaks
 
 ```
 python co_binding_test.py -f1 data/example_query.bed -f2 data/416B/GSM1708650_Erg_416B.mm9.bed -d 500 -bg data/example_query_all.bed
@@ -84,6 +77,34 @@ python motif_scanning.py -f data/example_query.bed -m data/mouse_TF.meme -o FLI1
 python co_binding_test.py -f1 NFIX_motif.FG.match.bed -f2 FLI1_motif.match.bed -d 200 -bg NFIX_motif.BG.match.bed
 
 ```
+
+
+## assign_targets.py 
+
+# Input
+
+1. query bed file (e.g., data/example_query.bed)
+
+2. TSS annotation file (e.g., data/mm9.ensembl_v67.TSS.gene_name.bed)
+
+3. EPI data (e.g., data/captureC.HSC.mm9.bed)
+
+4. WT.vs.KO gene expression data (e.g., data/example_KO_vs_WT.txt)
+
+# Output
+
+1. all candidate target gene assignments based on provided tss and epi data
+
+2. filtered target gene assignments based on KO experiments
+
+## co_binding_test.py
+
+# Input
+
+
+# Output
+
+
 # Workflow
 
 ![pipeline](./docs/images/TF_target_finder.png)
