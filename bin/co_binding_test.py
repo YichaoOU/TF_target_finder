@@ -23,11 +23,7 @@ Venn, FG overlap, mean BG overlap, p-value
 """
 
 
-import sys
-import os
-p_dir = os.path.dirname(os.path.realpath(__file__)) + "/"
-sys.path.append(os.path.abspath(p_dir+"../utils/"))
-from utils import *
+from tf_target_finder.utils import *
 from scipy.stats import chi2_contingency
 
 
